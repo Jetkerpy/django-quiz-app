@@ -1,0 +1,60 @@
+
+<script>
+
+// Modal buttondagi id aldiq
+const modalBtn = document.getElementById('modal-button')
+// Modal body aldtiq Tomendegi
+const modalBody = document.getElementById('modal-body-confirm')
+// Yes buttonda basgandagi tomendegi
+const startBtn = document.getElementById('start-button')
+
+
+// Tomendegi bizler django detail url bar soni
+// path('quiz/<int:pk>/', quiz_detail_view, name = 'quiz_detail'),
+// window.location.href == http://127.0.0.1:8000/ 
+
+const url = window.location.href +'quiz/'
+
+//joqaridagin tomendegi startBtn uzatamiz tomende korsen tusinesin
+// ham islep ketti
+
+
+modalBtn.addEventListener('click', (e)=>{
+    // for skilda django modaldagi islep edik button data- harturli magliwmatlari
+    // berip ketken edik yagniy getAttribute arqali alamiz sodan isleymiz ok
+    const obj_pk = modalBtn.getAttribute('data-pk')
+    const obj_name = modalBtn.getAttribute('data-quiz')
+    const obj_questions = modalBtn.getAttribute('data-questions')
+    const obj_difficulty = modalBtn.getAttribute('data-difficulty')
+    const obj_time = modalBtn.getAttribute('data-time')
+    const obj_pass = modalBtn.getAttribute('data-pass')
+    
+    modalBody.innerHTML = `
+        <div class="h3 mb-3">
+            Are you sure to want to begin "<b>${obj_name}</b>"
+        </div>
+        <div class="text-muted">
+            <ul>
+                <li>Difficulty: ${obj_difficulty}</li>
+                <li>Number of Questions: ${obj_questions}</li>
+                <li>Score to pass: ${obj_pass}</li>
+                <li>Time: ${obj_time}</li>
+            </ul>
+        </div>
+
+    `
+    startBtn.addEventListener('click', ()=>{
+        console.log(window.location.href) 
+        window.location.href = url + obj_pk
+
+    })
+})
+
+
+
+
+
+
+
+
+</script>

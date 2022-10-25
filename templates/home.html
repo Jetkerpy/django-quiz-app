@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+    <h1 id="hello">Hello</h1>
+
+     <!-- Modal -->
+     <div class="modal fade" id="quizStartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Start?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body-confirm">
+    
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">NO</button>
+            <button type="button" id="start-button" class="btn btn-success">YES</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+   
+
+
+    <!-- joqardin modaldin' buttoni tomende berip kettik -->
+    <div class="row mt-4 justify-content-center">
+        <div class="card p-3 col-md-10 shadow">
+            <h1 class="lead mb-3 text-center">Quiz List</h1>
+            {% for quiz in quizes %}
+                <button class="btn btn-link" id="modal-button"
+                 data-pk="{{quiz.pk}}" 
+                 data-quiz="{{quiz.name}}"
+                 data-questions="{{ quiz.number_of_questions }}"
+                 data-difficulty="{{ quiz.difficulty }}"
+                 data-time="{{ quiz.time }}"
+                 data-pass="{{ quiz.required_score_pass }}"
+
+
+                 data-bs-toggle="modal"
+                 data-bs-target="#quizStartModal"
+                 
+                 >
+                <!-- Joqaridagi toggle ham target modaldin ozinde keldi
+                bizler tek target ozgertik joqaridagi id da birdey boladi
+                -->
+                {{ quiz.name }}
+                </button> <br>
+            {% endfor %}
+        </div>
+    </div>
+
+
+ 
+
+    <!-- For javascripts  -->
+    {% include 'home_js.html' %}
+
+
+
+{% endblock content %}

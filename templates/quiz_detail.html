@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div class="row mt-4 justify-content-center">
+    <div class="card p-3 col-md-8 shadow">
+        <form action="" id="quiz-form" class="mt-3 mb-3">
+            {% csrf_token %}
+            <div id="quiz-box"></div>
+
+            <button type="submit" class="btn btn-outline-primary mt-3">Save</button>
+        </form>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    // tomende url --> http://127.0.0.1:8000/quiz/1/
+    const url = window.location.href
+
+    const quiz_form = document.getElementById('quiz-form')
+    const quiz_box = document.getElementById('quiz-box')
+
+    let data
+
+
+
+    $.ajax({
+        type: 'GET',
+        url: `${url}data`,
+        success: function(response){
+            data = response.data
+            data.forEach((obj) => {
+                for (const [question, answers] of Object.entries(obj)){
+                    quiz_box.innerHTML += `
+                    <hr>
+                    <div class = "mt-3">
+                        <b>${question}</b>
+                    </div>
+                    `
+                    answers.forEach((answer)=>{
+                        quiz_box.innerHTML += `
+                        <div>
+                            <input type = "radio" class = "ans" id = "${question}-${answer}" name = "${question}" value = "${answer}">
+                            <label for = "${question}">${answer}</label>
+                        </div>
+                        `
+                    })
+                }
+            });
+            
+        },
+        error: function(error){
+            console.log(error)
+        }
+    })
+
+    const quizform = document.getElementById('quiz-form')
+    const csrf = document.getElementsByName('csrfmiddlewaretoken')
+    
+
+
+
+</script>
+    
+
+
+{% endblock content %}
